@@ -7,6 +7,7 @@ public class HybridStackManagerPlugin: NSObject, FlutterPlugin, NativeStackApi {
     // 静态回调，供宿主 App 实现具体的跳转逻辑
     public static var onPushNative: ((String, [String: Any]?) -> Void)?
     public static var onPopNative: (() -> Void)?
+    public static var onRegisterFlutterRoutes: (([String]) -> Void)?
 
     public static func register(with registrar: FlutterPluginRegistrar) {
         let instance = HybridStackManagerPlugin()
@@ -41,6 +42,14 @@ public class HybridStackManagerPlugin: NSObject, FlutterPlugin, NativeStackApi {
                     }
                 }
             }
+        }
+    }
+
+    public func registerFlutterRoutes(routes: [String]) throws {
+        if let onRegister = HybridStackManagerPlugin.onRegisterFlutterRoutes {
+            onRegister(routes)
+        } else {
+            print("HybridStackManager: onRegisterFlutterRoutes not implemented")
         }
     }
     

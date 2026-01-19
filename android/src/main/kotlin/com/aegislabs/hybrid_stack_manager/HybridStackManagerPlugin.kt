@@ -15,6 +15,7 @@ class HybridStackManagerPlugin: FlutterPlugin, ActivityAware, NativeStackApi {
   // 静态单例回调，供宿主 App 注册
   companion object {
     var onPushNative: ((Activity, String, Map<String, Any>?) -> Unit)? = null
+    var onRegisterFlutterRoutes: ((List<String>) -> Unit)? = null
   }
 
   override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
@@ -66,5 +67,13 @@ class HybridStackManagerPlugin: FlutterPlugin, ActivityAware, NativeStackApi {
 
   override fun popNativeRoute() {
     activity?.finish()
+  }
+
+  override fun registerFlutterRoutes(routes: List<String>) {
+    if (onRegisterFlutterRoutes != null) {
+      onRegisterFlutterRoutes?.invoke(routes)
+    } else {
+      Log.w("HybridStackManager", "onRegisterFlutterRoutes not implemented")
+    }
   }
 }

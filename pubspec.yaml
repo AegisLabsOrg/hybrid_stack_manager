@@ -1,7 +1,7 @@
 name: hybrid_stack_manager
 description: "A hybrid stack manager that fuses Native and Flutter navigation using FlutterEngineGroup and Pigeon."
-version: 0.0.1
-homepage:
+version: 0.1.2
+homepage: https://github.com/AegisLabsOrg/hybrid_stack_manager
 
 environment:
   sdk: ^3.10.4

@@ -77,4 +77,9 @@ class HybridStackManager implements FlutterStackApi {
   Future<void> popNative() async {
     _nativeApi.popNativeRoute();
   }
+
+  /// 注册 Flutter 模块内可用的路由列表给 Native
+  Future<void> registerRoutes(List<String> routes) async {
+    await _nativeApi.registerFlutterRoutes(routes);
+  }
 }

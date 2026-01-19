@@ -69,7 +69,8 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
-struct NativeRouteArgs {
+/// Generated class from Pigeon that represents data sent in messages.
+public struct NativeRouteArgs {
   var routeName: String? = nil
   var arguments: [String: Any?]? = nil
 
@@ -129,16 +130,17 @@ class MessagesPigeonCodec: FlutterStandardMessageCodec, @unchecked Sendable {
 }
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
-protocol NativeStackApi {
+public protocol NativeStackApi {
   func pushNativeRoute(args: NativeRouteArgs) throws
   func popNativeRoute() throws
+  func registerFlutterRoutes(routes: [String]) throws
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
-class NativeStackApiSetup {
+public class NativeStackApiSetup {
   static var codec: FlutterStandardMessageCodec { MessagesPigeonCodec.shared }
   /// Sets up an instance of `NativeStackApi` to handle messages through the `binaryMessenger`.
-  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: NativeStackApi?, messageChannelSuffix: String = "") {
+  public static func setUp(binaryMessenger: FlutterBinaryMessenger, api: NativeStackApi?, messageChannelSuffix: String = "") {
     let channelSuffix = messageChannelSuffix.count > 0 ? ".\(messageChannelSuffix)" : ""
     let pushNativeRouteChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.hybrid_stack_manager.NativeStackApi.pushNativeRoute\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
@@ -167,6 +169,21 @@ class NativeStackApiSetup {
       }
     } else {
       popNativeRouteChannel.setMessageHandler(nil)
+    }
+    let registerFlutterRoutesChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.hybrid_stack_manager.NativeStackApi.registerFlutterRoutes\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      registerFlutterRoutesChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let routesArg = args[0] as! [String]
+        do {
+          try api.registerFlutterRoutes(routes: routesArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      registerFlutterRoutesChannel.setMessageHandler(nil)
     }
   }
 }

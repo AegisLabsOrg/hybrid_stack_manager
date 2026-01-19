@@ -22,6 +22,7 @@ class NativeRouteArgs {
 abstract class NativeStackApi {
   void pushNativeRoute(NativeRouteArgs args);
   void popNativeRoute();
+  void registerFlutterRoutes(List<String> routes);
 }
 
 // 接口：Native 调用 Flutter 的能力 (Flutter API)

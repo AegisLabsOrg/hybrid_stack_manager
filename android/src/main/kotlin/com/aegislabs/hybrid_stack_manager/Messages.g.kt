@@ -95,6 +95,7 @@ private open class MessagesPigeonCodec : StandardMessageCodec() {
 interface NativeStackApi {
   fun pushNativeRoute(args: NativeRouteArgs)
   fun popNativeRoute()
+  fun registerFlutterRoutes(routes: List<String>)
 
   companion object {
     /** The codec used by NativeStackApi. */
@@ -129,6 +130,24 @@ interface NativeStackApi {
           channel.setMessageHandler { _, reply ->
             val wrapped: List<Any?> = try {
               api.popNativeRoute()
+              listOf(null)
+            } catch (exception: Throwable) {
+              wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.hybrid_stack_manager.NativeStackApi.registerFlutterRoutes$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val routesArg = args[0] as List<String>
+            val wrapped: List<Any?> = try {
+              api.registerFlutterRoutes(routesArg)
               listOf(null)
             } catch (exception: Throwable) {
               wrapError(exception)

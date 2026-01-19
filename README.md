@@ -1,8 +1,18 @@
 # Hybrid Stack Manager
 
-A Flutter plugin for **Add-to-App**: make it easy to embed Flutter modules into existing Native (iOS/Android) apps and manage hybrid navigation with **FlutterEngineGroup**.
+Make embedding Flutter as easy as a **WebView**, but with **Native Performance**.
+
+A plugin designed for **Add-to-App** scenarios that manages hybrid navigation stacks efficiently using `FlutterEngineGroup`.
 
 ![](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+
+## Why use this?
+
+**Hybrid Stack Manager** solves the "heavyweight" problem of integrating Flutter.
+
+1.  **Lightweight**: New Flutter pages cost only **~180kB** RAM (vs ~19MB traditionally).
+2.  **Fast**: Instant startup (milliseconds) by sharing AOT resources.
+3.  **Simple**: API designed to feel just like opening a WebView or a Native Controller.
 
 | Goal | Capability | Description | Performance Benchmark |
 | --- | --- | --- | --- |
@@ -19,6 +29,22 @@ A Flutter plugin for **Add-to-App**: make it easy to embed Flutter modules into 
 - 🧠 **Engine Management Ready**: Designed to work with `FlutterEngineGroup` for memory-efficient multi-engine support.
 - 📱 **Platform Agnostic API**: Simple `pushNative` and `popNative` from Dart; `pushFlutter` and `popFlutter` from Native.
 - 🧩 **Router-Agnostic**: Works with `Navigator`, `go_router`, `auto_route`, or custom routing.
+
+## ⚖️ Comparison with Alternatives
+
+| Feature | **Hybrid Stack Manager** | **Flutter Boost** | **Thrio** | **Official Naive Multi-Engine** |
+| :--- | :--- | :--- | :--- | :--- |
+| **Architecture** | `FlutterEngineGroup` (Multi-Engine) | Single Engine | Single Engine | Multiple Engines |
+| **Memory Usage** | ✅ Low (~180kB/page) | ✅ Low (Shared) | ✅ Low (Shared) | ❌ High (~19MB/page) |
+| **Integration** | ✅ **Non-Invasive** (Standard API) | ❌ Invasive (Hooks into Engine) | ⚠️ Complex | ✅ Standard |
+| **State Isolation**| ✅ **High** (Separate Isolates) | ❌ Low (Shared Isolate) | ❌ Low (Shared Isolate) | ✅ High |
+| **Complexity** | 🟢 **Simple** | 🔴 High | 🔴 High | 🟡 Medium |
+| **Router Support**| ✅ **Any** (GoRouter, etc.) | ⚠️ Custom Router Required | ⚠️ Custom Router Required | ✅ Any |
+
+**Why choose Hybrid Stack Manager?**
+- **Isolation**: True isolation between pages (a crash in one Flutter page doesn't kill the entire Flutter stack).
+- **Simplicity**: No complex setup or engine hacking. Just "Start Activity" or "Push ViewController".
+- **Flexibility**: Use whatever Dart router you love (GoRouter, AutoRoute, etc.).
 
 ## Getting Started
 
@@ -221,4 +247,29 @@ Then choose the entrypoint/route from Native:
 - **iOS**: `HybridStack.shared.makeFlutterViewController(entrypoint: "main_profile", initialRoute: "/profile")`
 
 If you truly have **multiple independent Flutter modules** (separate build outputs), those are different artifacts. You must integrate them separately in the host app. This library currently supports **one Flutter module per host**. A multi‑module registry (moduleId -> engineGroup/project) can be added if needed.
+
+## ⚠️ Troubleshooting & Common Pitfalls
+
+### Android: "ActivityNotFoundException"
+- **Reason**: The plugin's Android manifest isn't being merged automatically, or the Activity isn't registered.
+- **Fix**: Ensure your `settings.gradle` has `repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)` so the plugin is correctly resolved. If that fails, manually add `<activity android:name="com.aegislabs.hybrid_stack_manager.HybridFlutterActivity" ... />` to your host app's `AndroidManifest.xml`.
+
+### iOS: "Sandbox: dartvm(...) deny(1) file-read-data"
+- **Reason**: Xcode 15+ enables "User Script Sandboxing" by default, preventing Flutter build scripts from running.
+- **Fix**: In Xcode, go to **Build Settings** -> **Build Options** -> **User Script Sandboxing** and set it to **NO**.
+
+### iOS: "No such module 'hybrid_stack_manager'"
+- **Reason**: CocoaPods setup might be incomplete or Xcode indexing is stale.
+- **Fix**:
+    1. Ensure `Podfile` is correctly set up with `install_all_flutter_pods`.
+    2. Always open `.xcworkspace` instead of `.xcodeproj`.
+    3. Run `pod deintegrate && pod install`.
+
+### iOS: "Method cannot be declared public because its parameter uses an internal type"
+- **Reason**: Pigeon generated Swift code (`Messages.g.swift`) uses `internal` structs by default, but your plugin API is `public`.
+- **Fix**: Manually change `struct` to `public struct` and `protocol` to `public protocol` in `Messages.g.swift`.
+
+### iOS: "Cannot find 'GeneratedPluginRegistrant'"
+- **Reason**: Missing import for the generated plugin registry.
+- **Fix**: Add `import FlutterPluginRegistrant` to your `AppDelegate.swift`.
 
