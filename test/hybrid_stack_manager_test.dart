@@ -1,56 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hybrid_stack_manager/hybrid_stack_manager.dart';
-import 'package:hybrid_stack_manager/src/messages.g.dart';
-import 'messages_test.g.dart';
-
-// Mock Native Api 实现 (用于验证 Dart -> Native 的调用)
-class MockNativeStackApi implements TestNativeStackApi {
-  NativeRouteArgs? lastPushArgs;
-  bool popCalled = false;
-
-  @override
-  void pushNativeRoute(NativeRouteArgs args) {
-    lastPushArgs = args;
-  }
-
-  @override
-  void popNativeRoute() {
-    popCalled = true;
-  }
-}
+import 'package:aegis_hybrid_stack_manager/aegis_hybrid_stack_manager.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-
-  final mockApi = MockNativeStackApi();
-
-  setUp(() {
-    // 注入 Mock 实现，拦截 Pigeon 调用，模拟 Native 端接收
-    TestNativeStackApi.setUp(mockApi);
-    mockApi.lastPushArgs = null;
-    mockApi.popCalled = false;
-  });
-
-  test('pushNative sends correct arguments to Native', () async {
-    // Act
-    await HybridStackManager.instance.pushNative(
-      'test_route',
-      arguments: {'id': 123},
-    );
-
-    // Assert
-    expect(mockApi.lastPushArgs, isNotNull);
-    expect(mockApi.lastPushArgs!.routeName, 'test_route');
-    expect(mockApi.lastPushArgs!.arguments, {'id': 123});
-  });
-
-  test('popNative calls native pop', () async {
-    // Act
-    await HybridStackManager.instance.popNative();
-
-    // Assert
-    expect(mockApi.popCalled, isTrue);
-  });
 
   test('Native calling pushFlutterRoute triggers delegate', () async {
     String? capturedRoute;

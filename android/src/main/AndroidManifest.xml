@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.aegislabs.hybrid_stack_manager">
+  package="com.aegislabs.aegis_hybrid_stack_manager">
     <application>
         <activity
             android:name=".HybridFlutterActivity"

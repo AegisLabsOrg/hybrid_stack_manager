@@ -2,7 +2,7 @@
 // See also: https://pub.dev/packages/pigeon
 @file:Suppress("UNCHECKED_CAST", "ArrayInDataClass")
 
-package com.aegislabs.hybrid_stack_manager
+package com.aegislabs.aegis_hybrid_stack_manager
 
 import android.util.Log
 import io.flutter.plugin.common.BasicMessageChannel
@@ -107,7 +107,7 @@ interface NativeStackApi {
     fun setUp(binaryMessenger: BinaryMessenger, api: NativeStackApi?, messageChannelSuffix: String = "") {
       val separatedMessageChannelSuffix = if (messageChannelSuffix.isNotEmpty()) ".$messageChannelSuffix" else ""
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.hybrid_stack_manager.NativeStackApi.pushNativeRoute$separatedMessageChannelSuffix", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.aegis_hybrid_stack_manager.NativeStackApi.pushNativeRoute$separatedMessageChannelSuffix", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
@@ -125,7 +125,7 @@ interface NativeStackApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.hybrid_stack_manager.NativeStackApi.popNativeRoute$separatedMessageChannelSuffix", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.aegis_hybrid_stack_manager.NativeStackApi.popNativeRoute$separatedMessageChannelSuffix", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             val wrapped: List<Any?> = try {
@@ -141,7 +141,7 @@ interface NativeStackApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.hybrid_stack_manager.NativeStackApi.registerFlutterRoutes$separatedMessageChannelSuffix", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.aegis_hybrid_stack_manager.NativeStackApi.registerFlutterRoutes$separatedMessageChannelSuffix", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
@@ -172,7 +172,7 @@ class FlutterStackApi(private val binaryMessenger: BinaryMessenger, private val 
   fun pushFlutterRoute(routeNameArg: String, argumentsArg: Map<String, Any?>?, callback: (Result<Unit>) -> Unit)
 {
     val separatedMessageChannelSuffix = if (messageChannelSuffix.isNotEmpty()) ".$messageChannelSuffix" else ""
-    val channelName = "dev.flutter.pigeon.hybrid_stack_manager.FlutterStackApi.pushFlutterRoute$separatedMessageChannelSuffix"
+    val channelName = "dev.flutter.pigeon.aegis_hybrid_stack_manager.FlutterStackApi.pushFlutterRoute$separatedMessageChannelSuffix"
     val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
     channel.send(listOf(routeNameArg, argumentsArg)) {
       if (it is List<*>) {
@@ -189,7 +189,7 @@ class FlutterStackApi(private val binaryMessenger: BinaryMessenger, private val 
   fun popFlutterRoute(callback: (Result<Unit>) -> Unit)
 {
     val separatedMessageChannelSuffix = if (messageChannelSuffix.isNotEmpty()) ".$messageChannelSuffix" else ""
-    val channelName = "dev.flutter.pigeon.hybrid_stack_manager.FlutterStackApi.popFlutterRoute$separatedMessageChannelSuffix"
+    val channelName = "dev.flutter.pigeon.aegis_hybrid_stack_manager.FlutterStackApi.popFlutterRoute$separatedMessageChannelSuffix"
     val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
     channel.send(null) {
       if (it is List<*>) {

@@ -142,8 +142,8 @@ class _MyAppState extends State<MyApp> {
 In your `Application` class:
 
 ```kotlin
-import com.aegislabs.hybrid_stack_manager.HybridStack
-import com.aegislabs.hybrid_stack_manager.HybridStackManagerPlugin
+import com.aegislabs.aegis_hybrid_stack_manager.HybridStack
+import com.aegislabs.aegis_hybrid_stack_manager.HybridStackManagerPlugin
 
 class MyApplication : Application() {
     override fun onCreate() {
@@ -173,7 +173,7 @@ class MyApplication : Application() {
 In your `AppDelegate.swift`:
 
 ```swift
-import hybrid_stack_manager
+import aegis_hybrid_stack_manager
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -252,13 +252,13 @@ If you truly have **multiple independent Flutter modules** (separate build outpu
 
 ### Android: "ActivityNotFoundException"
 - **Reason**: The plugin's Android manifest isn't being merged automatically, or the Activity isn't registered.
-- **Fix**: Ensure your `settings.gradle` has `repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)` so the plugin is correctly resolved. If that fails, manually add `<activity android:name="com.aegislabs.hybrid_stack_manager.HybridFlutterActivity" ... />` to your host app's `AndroidManifest.xml`.
+- **Fix**: Ensure your `settings.gradle` has `repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)` so the plugin is correctly resolved. If that fails, manually add `<activity android:name="com.aegislabs.aegis_hybrid_stack_manager.HybridFlutterActivity" ... />` to your host app's `AndroidManifest.xml`.
 
 ### iOS: "Sandbox: dartvm(...) deny(1) file-read-data"
 - **Reason**: Xcode 15+ enables "User Script Sandboxing" by default, preventing Flutter build scripts from running.
 - **Fix**: In Xcode, go to **Build Settings** -> **Build Options** -> **User Script Sandboxing** and set it to **NO**.
 
-### iOS: "No such module 'hybrid_stack_manager'"
+### iOS: "No such module 'aegis_hybrid_stack_manager'"
 - **Reason**: CocoaPods setup might be incomplete or Xcode indexing is stale.
 - **Fix**:
     1. Ensure `Podfile` is correctly set up with `install_all_flutter_pods`.

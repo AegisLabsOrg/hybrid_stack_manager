@@ -1,4 +1,4 @@
-package com.aegislabs.hybrid_stack_manager
+package com.aegislabs.aegis_hybrid_stack_manager
 
 import android.content.Context
 import io.flutter.embedding.engine.FlutterEngine

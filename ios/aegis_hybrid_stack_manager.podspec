@@ -3,7 +3,7 @@
 # Run `pod lib lint hybrid_stack_manager.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'hybrid_stack_manager'
+  s.name             = 'aegis_hybrid_stack_manager'
   s.version          = '0.0.1'
   s.summary          = 'A new Flutter project.'
   s.description      = <<-DESC

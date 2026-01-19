@@ -1,4 +1,4 @@
-name: hybrid_stack_manager
+name: aegis_hybrid_stack_manager
 description: "A hybrid stack manager that fuses Native and Flutter navigation using FlutterEngineGroup and Pigeon."
 version: 0.1.2
 homepage: https://github.com/AegisLabsOrg/hybrid_stack_manager
@@ -39,7 +39,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.aegislabs.hybrid_stack_manager
+        package: com.aegislabs.aegis_hybrid_stack_manager
         pluginClass: HybridStackManagerPlugin
       ios:
         pluginClass: HybridStackManagerPlugin

@@ -69,8 +69,7 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
-/// Generated class from Pigeon that represents data sent in messages.
-public struct NativeRouteArgs {
+struct NativeRouteArgs {
   var routeName: String? = nil
   var arguments: [String: Any?]? = nil
 
@@ -130,19 +129,19 @@ class MessagesPigeonCodec: FlutterStandardMessageCodec, @unchecked Sendable {
 }
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
-public protocol NativeStackApi {
+protocol NativeStackApi {
   func pushNativeRoute(args: NativeRouteArgs) throws
   func popNativeRoute() throws
   func registerFlutterRoutes(routes: [String]) throws
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
-public class NativeStackApiSetup {
+class NativeStackApiSetup {
   static var codec: FlutterStandardMessageCodec { MessagesPigeonCodec.shared }
   /// Sets up an instance of `NativeStackApi` to handle messages through the `binaryMessenger`.
-  public static func setUp(binaryMessenger: FlutterBinaryMessenger, api: NativeStackApi?, messageChannelSuffix: String = "") {
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: NativeStackApi?, messageChannelSuffix: String = "") {
     let channelSuffix = messageChannelSuffix.count > 0 ? ".\(messageChannelSuffix)" : ""
-    let pushNativeRouteChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.hybrid_stack_manager.NativeStackApi.pushNativeRoute\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let pushNativeRouteChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.aegis_hybrid_stack_manager.NativeStackApi.pushNativeRoute\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       pushNativeRouteChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
@@ -157,7 +156,7 @@ public class NativeStackApiSetup {
     } else {
       pushNativeRouteChannel.setMessageHandler(nil)
     }
-    let popNativeRouteChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.hybrid_stack_manager.NativeStackApi.popNativeRoute\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let popNativeRouteChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.aegis_hybrid_stack_manager.NativeStackApi.popNativeRoute\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       popNativeRouteChannel.setMessageHandler { _, reply in
         do {
@@ -170,7 +169,7 @@ public class NativeStackApiSetup {
     } else {
       popNativeRouteChannel.setMessageHandler(nil)
     }
-    let registerFlutterRoutesChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.hybrid_stack_manager.NativeStackApi.registerFlutterRoutes\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let registerFlutterRoutesChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.aegis_hybrid_stack_manager.NativeStackApi.registerFlutterRoutes\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       registerFlutterRoutesChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
@@ -203,7 +202,7 @@ class FlutterStackApi: FlutterStackApiProtocol {
     return MessagesPigeonCodec.shared
   }
   func pushFlutterRoute(routeName routeNameArg: String, arguments argumentsArg: [String: Any?]?, completion: @escaping (Result<Void, PigeonError>) -> Void) {
-    let channelName: String = "dev.flutter.pigeon.hybrid_stack_manager.FlutterStackApi.pushFlutterRoute\(messageChannelSuffix)"
+    let channelName: String = "dev.flutter.pigeon.aegis_hybrid_stack_manager.FlutterStackApi.pushFlutterRoute\(messageChannelSuffix)"
     let channel = FlutterBasicMessageChannel(name: channelName, binaryMessenger: binaryMessenger, codec: codec)
     channel.sendMessage([routeNameArg, argumentsArg] as [Any?]) { response in
       guard let listResponse = response as? [Any?] else {
@@ -221,7 +220,7 @@ class FlutterStackApi: FlutterStackApiProtocol {
     }
   }
   func popFlutterRoute(completion: @escaping (Result<Void, PigeonError>) -> Void) {
-    let channelName: String = "dev.flutter.pigeon.hybrid_stack_manager.FlutterStackApi.popFlutterRoute\(messageChannelSuffix)"
+    let channelName: String = "dev.flutter.pigeon.aegis_hybrid_stack_manager.FlutterStackApi.popFlutterRoute\(messageChannelSuffix)"
     let channel = FlutterBasicMessageChannel(name: channelName, binaryMessenger: binaryMessenger, codec: codec)
     channel.sendMessage(nil) { response in
       guard let listResponse = response as? [Any?] else {

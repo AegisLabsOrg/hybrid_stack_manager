@@ -6,10 +6,11 @@
 // For more information about Flutter integration tests, please see
 // https://flutter.dev/to/integration-testing
 
+import 'package:aegis_hybrid_stack_manager/hybrid_stack_manager.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:hybrid_stack_manager/hybrid_stack_manager.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();

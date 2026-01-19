@@ -92,7 +92,7 @@
 
 ### Android: "ActivityNotFoundException"
 - **原因**：插件的 `AndroidManifest.xml` 没有被正确合并，或者 Activity 没有注册。
-- **解决**：确保你的 `settings.gradle` 设置了 `repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)` 以便能够解析插件。如果依然报错，请在宿主 App 的 `AndroidManifest.xml` 中手动添加 `<activity android:name="com.aegislabs.hybrid_stack_manager.HybridFlutterActivity" ... />`。
+- **解决**：确保你的 `settings.gradle` 设置了 `repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)` 以便能够解析插件。如果依然报错，请在宿主 App 的 `AndroidManifest.xml` 中手动添加 `<activity android:name="com.aegislabs.aegis_hybrid_stack_manager.HybridFlutterActivity" ... />`。
 
 ### iOS: "Sandbox: dartvm(...) deny(1) file-read-data"
 - **原因**：Xcode 15+ 默认开启了 "User Script Sandboxing"，阻止了 Flutter 构建脚本访问文件。

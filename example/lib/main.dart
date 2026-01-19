@@ -5,7 +5,7 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
-import 'package:hybrid_stack_manager/hybrid_stack_manager.dart';
+import 'package:aegis_hybrid_stack_manager/aegis_hybrid_stack_manager.dart';
 
 void main() {
   runApp(const MyApp());

@@ -15,11 +15,7 @@ PlatformException _createConnectionError(String channelName) {
   );
 }
 
-List<Object?> wrapResponse({
-  Object? result,
-  PlatformException? error,
-  bool empty = false,
-}) {
+List<Object?> wrapResponse({Object? result, PlatformException? error, bool empty = false}) {
   if (empty) {
     return <Object?>[];
   }
@@ -30,14 +26,20 @@ List<Object?> wrapResponse({
 }
 
 class NativeRouteArgs {
-  NativeRouteArgs({this.routeName, this.arguments});
+  NativeRouteArgs({
+    this.routeName,
+    this.arguments,
+  });
 
   String? routeName;
 
   Map<String, Object?>? arguments;
 
   Object encode() {
-    return <Object?>[routeName, arguments];
+    return <Object?>[
+      routeName,
+      arguments,
+    ];
   }
 
   static NativeRouteArgs decode(Object result) {
@@ -49,6 +51,7 @@ class NativeRouteArgs {
   }
 }
 
+
 class _PigeonCodec extends StandardMessageCodec {
   const _PigeonCodec();
   @override
@@ -56,7 +59,7 @@ class _PigeonCodec extends StandardMessageCodec {
     if (value is int) {
       buffer.putUint8(4);
       buffer.putInt64(value);
-    } else if (value is NativeRouteArgs) {
+    }    else if (value is NativeRouteArgs) {
       buffer.putUint8(129);
       writeValue(buffer, value.encode());
     } else {
@@ -67,7 +70,7 @@ class _PigeonCodec extends StandardMessageCodec {
   @override
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
-      case 129:
+      case 129: 
         return NativeRouteArgs.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
@@ -79,13 +82,9 @@ class NativeStackApi {
   /// Constructor for [NativeStackApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  NativeStackApi({
-    BinaryMessenger? binaryMessenger,
-    String messageChannelSuffix = '',
-  }) : pigeonVar_binaryMessenger = binaryMessenger,
-       pigeonVar_messageChannelSuffix = messageChannelSuffix.isNotEmpty
-           ? '.$messageChannelSuffix'
-           : '';
+  NativeStackApi({BinaryMessenger? binaryMessenger, String messageChannelSuffix = ''})
+      : pigeonVar_binaryMessenger = binaryMessenger,
+        pigeonVar_messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
   final BinaryMessenger? pigeonVar_binaryMessenger;
 
   static const MessageCodec<Object?> pigeonChannelCodec = _PigeonCodec();
@@ -93,17 +92,13 @@ class NativeStackApi {
   final String pigeonVar_messageChannelSuffix;
 
   Future<void> pushNativeRoute(NativeRouteArgs args) async {
-    final String pigeonVar_channelName =
-        'dev.flutter.pigeon.hybrid_stack_manager.NativeStackApi.pushNativeRoute$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel =
-        BasicMessageChannel<Object?>(
-          pigeonVar_channelName,
-          pigeonChannelCodec,
-          binaryMessenger: pigeonVar_binaryMessenger,
-        );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
-      <Object?>[args],
+    final String pigeonVar_channelName = 'dev.flutter.pigeon.aegis_hybrid_stack_manager.NativeStackApi.pushNativeRoute$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+      pigeonVar_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: pigeonVar_binaryMessenger,
     );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[args]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -120,14 +115,12 @@ class NativeStackApi {
   }
 
   Future<void> popNativeRoute() async {
-    final String pigeonVar_channelName =
-        'dev.flutter.pigeon.hybrid_stack_manager.NativeStackApi.popNativeRoute$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel =
-        BasicMessageChannel<Object?>(
-          pigeonVar_channelName,
-          pigeonChannelCodec,
-          binaryMessenger: pigeonVar_binaryMessenger,
-        );
+    final String pigeonVar_channelName = 'dev.flutter.pigeon.aegis_hybrid_stack_manager.NativeStackApi.popNativeRoute$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+      pigeonVar_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: pigeonVar_binaryMessenger,
+    );
     final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(null);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
@@ -145,17 +138,13 @@ class NativeStackApi {
   }
 
   Future<void> registerFlutterRoutes(List<String> routes) async {
-    final String pigeonVar_channelName =
-        'dev.flutter.pigeon.hybrid_stack_manager.NativeStackApi.registerFlutterRoutes$pigeonVar_messageChannelSuffix';
-    final BasicMessageChannel<Object?> pigeonVar_channel =
-        BasicMessageChannel<Object?>(
-          pigeonVar_channelName,
-          pigeonChannelCodec,
-          binaryMessenger: pigeonVar_binaryMessenger,
-        );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
-      <Object?>[routes],
+    final String pigeonVar_channelName = 'dev.flutter.pigeon.aegis_hybrid_stack_manager.NativeStackApi.registerFlutterRoutes$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+      pigeonVar_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: pigeonVar_binaryMessenger,
     );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[routes]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -179,57 +168,38 @@ abstract class FlutterStackApi {
 
   void popFlutterRoute();
 
-  static void setUp(
-    FlutterStackApi? api, {
-    BinaryMessenger? binaryMessenger,
-    String messageChannelSuffix = '',
-  }) {
-    messageChannelSuffix = messageChannelSuffix.isNotEmpty
-        ? '.$messageChannelSuffix'
-        : '';
+  static void setUp(FlutterStackApi? api, {BinaryMessenger? binaryMessenger, String messageChannelSuffix = '',}) {
+    messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
     {
-      final BasicMessageChannel<Object?>
-      pigeonVar_channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.hybrid_stack_manager.FlutterStackApi.pushFlutterRoute$messageChannelSuffix',
-        pigeonChannelCodec,
-        binaryMessenger: binaryMessenger,
-      );
+      final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.aegis_hybrid_stack_manager.FlutterStackApi.pushFlutterRoute$messageChannelSuffix', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
       if (api == null) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
         pigeonVar_channel.setMessageHandler((Object? message) async {
-          assert(
-            message != null,
-            'Argument for dev.flutter.pigeon.hybrid_stack_manager.FlutterStackApi.pushFlutterRoute was null.',
-          );
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.aegis_hybrid_stack_manager.FlutterStackApi.pushFlutterRoute was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final String? arg_routeName = (args[0] as String?);
-          assert(
-            arg_routeName != null,
-            'Argument for dev.flutter.pigeon.hybrid_stack_manager.FlutterStackApi.pushFlutterRoute was null, expected non-null String.',
-          );
-          final Map<String, Object?>? arg_arguments =
-              (args[1] as Map<Object?, Object?>?)?.cast<String, Object?>();
+          assert(arg_routeName != null,
+              'Argument for dev.flutter.pigeon.aegis_hybrid_stack_manager.FlutterStackApi.pushFlutterRoute was null, expected non-null String.');
+          final Map<String, Object?>? arg_arguments = (args[1] as Map<Object?, Object?>?)?.cast<String, Object?>();
           try {
             api.pushFlutterRoute(arg_routeName!, arg_arguments);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          } catch (e) {
-            return wrapResponse(
-              error: PlatformException(code: 'error', message: e.toString()),
-            );
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
           }
         });
       }
     }
     {
-      final BasicMessageChannel<Object?>
-      pigeonVar_channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.hybrid_stack_manager.FlutterStackApi.popFlutterRoute$messageChannelSuffix',
-        pigeonChannelCodec,
-        binaryMessenger: binaryMessenger,
-      );
+      final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.aegis_hybrid_stack_manager.FlutterStackApi.popFlutterRoute$messageChannelSuffix', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
       if (api == null) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
@@ -239,10 +209,8 @@ abstract class FlutterStackApi {
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          } catch (e) {
-            return wrapResponse(
-              error: PlatformException(code: 'error', message: e.toString()),
-            );
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
           }
         });
       }
