@@ -1,5 +1,5 @@
+import 'package:aegis_hybrid_stack_manager/aegis_hybrid_stack_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:hybrid_stack_manager/hybrid_stack_manager.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

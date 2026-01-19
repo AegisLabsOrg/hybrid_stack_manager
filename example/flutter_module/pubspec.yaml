@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  hybrid_stack_manager:
+  aegis_hybrid_stack_manager:
     path: ../..
 
   # The following adds the Cupertino Icons font to your application.
